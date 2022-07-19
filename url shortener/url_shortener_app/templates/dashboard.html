@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid align-content-center p-2 ps-5 pe-5">
+          <a class="navbar-brand fs-2" href="">Lorem Url Shortener</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav fs-5">
+              <a class="nav-link ms-4" aria-current="page" href="{{ url_for('home_page') }}">Home</a>
+              <a class="nav-link ms-4" href="{{ url_for('logout_page') }}">Log Out</a>
+            </div>
+          </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if(messages) %}
+            {% for category,message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row mt-5">
+        <div class="col-6 ps-5 pe-5 mb-5">
+            {% if urls %}
+            {% for url in urls %}
+            <div class="card mt-5">
+                <div class="card-header">
+                  <h5 class="card-title">{{url.name | title}}</h5>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-title">URL For : </h6>
+                  <p class="card-text">Original URL : <a href="{{ url.original_url }}" target="_blank">{{ url.original_url }}</a></p>
+                  <p class="card-text">Short URL : <a href="{{ url_for('redirect_page', short_url=url.shortened_url) }}" target="_blank">127.0.0.1{{ url_for('redirect_page', short_url=url.shortened_url) }}</a></p>
+                  <a href="{{ url_for('redirect_page', short_url=url.shortened_url) }}" class="btn btn-primary">Check URL</a>
+                  <a href="{{ url_for('delete_page', short_url=url.shortened_url) }}" class="btn btn-danger ms-3">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-6 ps-5 pe-5">
+            <h1 class="text-center">Create a new URL</h1>
+            <div class="ms-auto me-auto ps-3 pe-3 pt-3 pb-3 border-3 border-danger" style="width: 70%;" >
+                <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="row mt-5">
+                        {{ form.url_name.label(class="form-label fs-5") }}
+                        {{ form.url_name(class="form-control") }}
+                    </div>
+                    <div class="row mt-2">
+                        {{ form.original_url.label(class="form-label fs-5") }}
+                        {{ form.original_url(class="form-control") }}
+                    </div>
+                    <div class="row mt-4">
+                        {{ form.submit_btn(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+    </script>
+</body>
+</html>

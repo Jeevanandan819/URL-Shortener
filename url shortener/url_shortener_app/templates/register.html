@@ -1,0 +1,40 @@
+{% extends 'reg-template.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+    <div class="main-content pe-5 ps-5">
+        <h1 class="text-center text-white fs-1 mb-5">Ipsum Blogs</h1>
+        <div class="border-3 border pt-4 rounded-3 pb-3 pe-5 ps-5 mt-5">
+            <h2 class="text-center text-white">Register</h2>
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.username.label(class="form-label fs-4 text-white") }}
+                    {{ form.username(class="form-control text-white bg-secondary border-dark fs-5") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label fs-4 text-white") }}
+                    {{ form.email(class="form-control text-white bg-secondary border-dark fs-5") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.password1.label(class="form-label fs-4 text-white") }}
+                    {{ form.password1(class="form-control text-white bg-secondary border-dark fs-5") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.password2.label(class="form-label fs-4 text-white") }}
+                    {{ form.password2(class="form-control text-white bg-secondary border-dark fs-5") }}
+                </div>
+                <div class="mb-3 mt-4 text-center">
+                    {{ form.submit(class="btn btn-warning btn-block pe-5 ps-5 text-dark fw-bold") }}
+                </div>
+                <div class="text-center text-white">
+                    <small>Already have an account ?</small>
+                    <a href="{{ url_for('login_page') }}"> Log In </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
